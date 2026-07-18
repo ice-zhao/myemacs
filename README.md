@@ -1,5 +1,5 @@
 # myemacs
-my emacs setup and configuration for daily development
+my emacs setup and configuration for daily development.
 
 Usage:
 I use emacs that has compiled from source code by myself. 
