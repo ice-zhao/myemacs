@@ -1,0 +1,169 @@
+#!/usr/bin/env bash
+#this file should be sourced by .bashrc file.
+
+
+bdumpsig () {
+	bitbake-dumpsig "$@"
+}
+
+bdfsig () {
+	bitbake-diffsigs "$@"
+}
+
+
+#dump signature of sigdata or siginfo file
+dumpsig () {
+    recipe=""
+    task=""
+    if [[ $# -ge 2 ]]; then
+        recipe="${2}"
+        task="${1}"
+        bdumpsig -t "${recipe}" "${task}"
+        return
+    fi
+    echo "usage: dumpsig recipe task"
+}
+
+#figure out what changed between two versions of a task.
+dfsig () {
+    recipe=""
+    task=""
+    if [[ $# -ge 2 ]]; then
+        recipe="${2}"
+        task="${1}"
+        bdfsig -t "${recipe}" "${task}"
+        return
+    fi
+    echo "usage: dfsig recipe task"
+}
+
+b () {
+    bitbake $@
+}
+
+#clean and build
+cb () {
+    bitbake -c clean $1
+    bitbake $1
+}
+
+#build command (task)
+bcmd () {
+	recipe="${2}"
+	cmd="${1}"
+    bitbake -c "${cmd}" "${recipe}"
+}
+
+#re-build
+rb () {
+    bitbake -c cleansstate $1
+    bitbake $1
+}
+
+#execute a specific task of .bb file.(ignore any dependency)
+#bbfile should specify the full name (include version).
+bb () {
+    bbfile="${2}"
+    cmd="${1}"
+    bitbake -b "${bbfile}" -c "${cmd}"
+}
+
+#show environment that includes variables and functions
+be () {
+	bbfile=""
+	envfile=""
+
+    if [[ $# -ge 1 ]]; then
+        bbfile="${1}"
+		envfile="${bbfile}"
+	else
+		bbfile="bitbake"
+		envfile="bitbake"
+    fi
+
+	savedfile="${envfile}.env"
+
+	if [[ -e "${savedfile}" ]]; then
+		chmod u+w "${savedfile}"
+	fi
+
+    b -e ${bbfile} > ${savedfile}
+	chmod a-w "${savedfile}"
+	echo "saved ${bbfile} environment to file ${savedfile}"
+}
+
+#show environment of specific task of recipe
+bec () {
+	cmd=""
+	bbfile=""
+
+    if [[ $# -le 1 ]]; then
+		echo "Usage: bec task recipe"
+		return
+	fi
+
+    cmd="${1}"
+	bbfile="${2}"
+
+	savedfile="${bbfile}.env"
+
+	if [[ -e "${savedfile}" ]]; then
+		chmod u+w "${savedfile}"
+	fi
+
+    b -e -c ${cmd} ${bbfile} > ${savedfile}
+	chmod a-w "${savedfile}"
+	echo "saved ${bbfile} environment to file ${savedfile}"
+}
+
+#display dependency of tasks in UI
+bgu () {
+    b -g -u taskexp "$@"
+}
+
+#list packages
+lspkg () {
+    oe-pkgdata-util list-pkgs "$@"
+}
+
+#list files of package
+lsfile () {
+    oe-pkgdata-util list-pkg-files "$@"
+}
+
+#list tasks of a recipe
+lstask () {
+	bc "${1}" listtasks
+}
+
+#list recipes that generate packages
+findbb () {
+    oe-pkgdata-util lookup-recipe "$@"
+}
+
+#find package from file path
+findpkg () {
+    oe-pkgdata-util find-path "$@"
+}
+
+#alias
+pkg () {
+    oe-pkgdata-util "$@"
+}
+
+#debug -DDD -v verbose,
+#-v : will show why BitBake chose a certain version of a package or why BitBake picked a certain provider.
+bdddv () {
+	recipe="$1"
+	b -DDD -v "${recipe}"
+}
+
+bv () {
+	recipe="$1"
+	b -v "${recipe}"
+}
+
+export -f b; export -f cb; export -f bcmd; export -f dumpsig
+export -f rb; export -f bb; export -f be; export -f pkg; export -f bgu
+export -f lspkg; export -f lsfile; export -f findbb; export -f findpkg
+

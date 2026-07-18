@@ -1,0 +1,30 @@
+[user]
+    email = smilebit@163.com
+    name = ice.zhao
+[push]
+    default = simple
+[color]
+    ui = auto
+[core]
+	safecrlf = true
+    autocrlf = false
+[credential]
+    helper = cache
+[safe]
+    directory = /home/ice/mnt/gitserver/emacs-local
+	directory = /mnt/gitserver/emacs-local
+[alias]
+    co = checkout
+    pu = push
+    pl = pull
+    me = merge --no-ff
+    cp = cherry-pick
+    st = status
+    br = branch
+    ft = fetch
+    cn = config
+    sb = submodule
+    cl = clone
+	ci = commit
+	re = restore
+	df = diff

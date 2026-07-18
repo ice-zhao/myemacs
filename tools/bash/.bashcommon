@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth:ignoredups:erasedups
+
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+#Tools
+kubebin="/home/ice/gm/tryit/kubernetes/bin"
+export GOPATH="/home/ice/gm/go"
+installed="/home/ice/installed"
+gmfoss="/home/ice/gm/foss"
+user_local_bin="/home/ice/.local/bin"
+#llvm="/home/ice/cto/installed/llvm/bin"
+llvm="/home/ice/cto/foss/build-llvm/bin"
+emacs="/home/ice/installed/emacs/bin"
+
+#commands aliases
+alias g='git'
+alias k='kubectl'
+alias d='docker'
+
+
+
+export PATH="${installed}/emacs/utils":${PATH}
+export PATH="${installed}/bochs/bin":${PATH}
+export PATH="${installed}/qemu/bin":${PATH}
+export PATH="${gmfoss}/arm-13.3-none-eabi/bin":${PATH}
+export PATH="$PATH:$GOPATH:${kubebin}:${user_local_bin}:${llvm}"
+export PATH="$PATH:${emacs}"
+
+
+#setup tools completion
+source <(kubectl completion bash | sed -e 's/kubectl/k/g')
+source <(docker completion bash | sed -e 's/docker/d/g')
+source ${HOME}/.git-completion.bash
+
+

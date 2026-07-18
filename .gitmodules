@@ -1,0 +1,3 @@
+[submodule ".emacs.d/ide/bb-mode"]
+	path = .emacs.d/ide/bitbake/bb-mode
+	url = https://github.com/mferland/bb-mode.git

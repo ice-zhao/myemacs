@@ -1,17 +1,29 @@
-# Compiled
-*.elc
-
-# Packaging
-.cask/
-.eask/
-.eldev/
-.keg/
-
-# Built distribution
-dist/
-
-# Backup files
-*~
-
-# Undo-tree save-files
-*.~undo-tree
+.cache/
+.emacs.d/auto-save-list/
+.emacs.d/projectile.cache
+.emacs.d/.dap-breakpoints
+.config/
+.emacs.d/projectile-bookmarks.eld
+.emacs.d/elpa/*
+.emacs.d/.lsp-session-v1
+.emacs.d/tramp
+.emacs.d/snippets
+.emacs.d/recentf
+.emacs.d/semanticdb/
+.emacs.d/recentf.eld
+.emacs~
+bin/
+include/
+lib/
+libexec/
+share/
+.python_history
+.subversion/
+.emacs.d/eln-cache/*
+.emacs.d/eshell/*
+.bash_history
+.emacs.d/projects
+.viminfo
+.emacs.d/transient/
+.emacs.d/projects.eld
+projectile-frecency.eld

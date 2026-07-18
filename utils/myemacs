@@ -1,0 +1,7 @@
+#!/bin/bash
+
+HOME=/home/ice/installed/emacs/
+#plists provide better performance in deserialization
+export LSP_USE_PLISTS=true
+/home/ice/installed/emacs/bin/emacs -fs
+#/home/ice/installed/emacs/bin/emacs -fs --debug-init
